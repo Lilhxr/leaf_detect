@@ -1,0 +1,14 @@
+python CKA_Expr.py --timm_model1_name 'resnet50' \
+                   --timm_model2_name 'swin_tiny_patch4_window7_224' \
+                   --pretrained True \
+                   --num_classes 5 \
+                   --model1_name 'vit tiny' \
+                   --model2_name 'swin tiny' \
+                   --device 'cuda' \
+                   --cka_save_path './cka_info.json' \
+                   --fig_save_path './cka_info.png' \
+                   --train_path './data/cassava_sample_data/train' \
+                   --valid_path './data/cassava_sample_data/valid' \
+                   --test_path './data/cassava_sample_data/test' \
+                   --batch_size 16 \
+                   --image_size 224

@@ -4,6 +4,7 @@ from albumentations.pytorch import ToTensorV2
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
+from Cutmix import CutMix
 import albumentations as A
 from typing import Dict
 import numpy as np
@@ -59,18 +60,21 @@ class DataGenerator(object):
                  valid_path: str,
                  test_path: str,
                  batch_size: int,
-                 image_size: int):
+                 image_size: int,
+                 apply_cutmix: bool):
         '''
         :param train_path: (str) path of train data
         :param valid_path: (str) path of valid data
         :param test_path: (str) path of test data
         :param batch_size: (int) batch size
         :param image_size: (int) image dimension
+        :param apply_cutmix: (bool) whether apply cutmix
         '''
         self.train_path = train_path
         self.valid_path = valid_path
         self.test_path = test_path
         self.batch_size = batch_size
+        self.apply_cutmix = apply_cutmix
         self.train_augs = Transforms(A.Compose([
             A.RandomResizedCrop(
                 height=image_size, width=image_size),
@@ -100,6 +104,10 @@ class DataGenerator(object):
 
         train_data = ImageDataset(ImageFolder(
             self.train_path, transform=self.train_augs))
+
+        if self.apply_cutmix:
+            train_data = CutMix(train_data, num_class=5, beta=1.0,
+                                prob=0.5, num_mix=2)
 
         class_sample_counts = np.empty(len(train_data.classes), dtype=int)
         for idx in range(len(train_data.classes)):

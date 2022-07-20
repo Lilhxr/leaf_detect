@@ -1,0 +1,18 @@
+python CKA_Expr2.py --timm_model1_name 'vit_tiny_patch16_224' \
+                    --timm_model2_name 'swin_tiny_patch4_window7_224' \
+                    --pretrained 1 \
+                    --num_classes 5 \
+                    --model1_name 'vit tiny' \
+                    --model2_name 'swin tiny' \
+                    --device 'cuda' \
+                    --cka_save_path './outputs/cka2_info.json' \
+                    --fig_save_path './outputs/cka2_info.png' \
+                    --train_path './data/cassava_sample_data/train' \
+                    --valid_path './data/cassava_sample_data/valid' \
+                    --test_path './data/cassava_sample_data/test' \
+                    --batch_size 16 \
+                    --image_size 224 \
+                    --apply_cutmix 0 \
+                    --model1_path './models/vit_tiny_patch16_224.pth' \
+                    --model2_path './models/swin_tiny_patch4_window7_224.pth' \
+                    --use_fine_tune 0
